@@ -48,7 +48,7 @@ public class SlideShowView extends javax.swing.JFrame {
 
         fileChooserjFileChooser = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        imageLabeljLabel = new javax.swing.JLabel();
+        imageLabeljLabel = new com.mycompany.slideshow.PictureComponent();
         setTimerjSlider = new javax.swing.JSlider();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -63,17 +63,7 @@ public class SlideShowView extends javax.swing.JFrame {
         setTitle("Slide Show");
         setLocationByPlatform(true);
 
-        imageLabeljLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imageLabeljLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        imageLabeljLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        imageLabeljLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                imageLabeljLabelMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                imageLabeljLabelMouseExited(evt);
-            }
-        });
+        imageLabeljLabel.setText("pictureComponent1");
         jScrollPane1.setViewportView(imageLabeljLabel);
 
         setTimerjSlider.setMaximum(10);
@@ -165,16 +155,6 @@ public class SlideShowView extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_ExitjMenuItemActionPerformed
 
-    private void imageLabeljLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabeljLabelMouseEntered
-        // TODO add your handling code here:
-        imageLabeljLabel.setEnabled(true);
-    }//GEN-LAST:event_imageLabeljLabelMouseEntered
-
-    private void imageLabeljLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabeljLabelMouseExited
-        // TODO add your handling code here:
-        imageLabeljLabel.setEnabled(false);
-    }//GEN-LAST:event_imageLabeljLabelMouseExited
-
     private void setTimerjSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_setTimerjSliderStateChanged
         // TODO add your handling code here:
         int slideValue = setTimerjSlider.getValue();
@@ -234,7 +214,7 @@ public class SlideShowView extends javax.swing.JFrame {
     private javax.swing.JMenuItem ExitjMenuItem;
     private javax.swing.JMenuItem OpenjMenuItem;
     private javax.swing.JFileChooser fileChooserjFileChooser;
-    private javax.swing.JLabel imageLabeljLabel;
+    private com.mycompany.slideshow.PictureComponent imageLabeljLabel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;

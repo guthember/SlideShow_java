@@ -5,6 +5,10 @@
  */
 package com.mycompany.slideshow;
 
+import java.awt.Graphics;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JLabel;
 
 /**
@@ -12,5 +16,16 @@ import javax.swing.JLabel;
  * @author guthe
  */
 public class PictureComponent extends JLabel{
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
+        
+        
+        Date dateNow = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+        String formatted = formatter.format(dateNow);
+        g.drawString(formatted, 100, 100);
+    }
     
 }
