@@ -6,7 +6,6 @@
 package com.mycompany.slideshow;
 
 import java.io.File;
-import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
@@ -15,8 +14,7 @@ import javax.swing.JFileChooser;
  * @author tanar
  */
 public class SlideShowView extends javax.swing.JFrame {
-    
-    private ArrayList<ImageIcon> images;
+
     /**
      * Creates new form SlideShowView
      */
@@ -26,7 +24,7 @@ public class SlideShowView extends javax.swing.JFrame {
         // own file filter
         ImageFileFilter filter = new ImageFileFilter();
         fileChooserjFileChooser.setFileFilter(filter);
-        images = new ArrayList<>();
+        
     }
 
     /**
@@ -47,24 +45,15 @@ public class SlideShowView extends javax.swing.JFrame {
         ExitjMenuItem = new javax.swing.JMenuItem();
 
         fileChooserjFileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooserjFileChooser.setCurrentDirectory(new java.io.File("C:\\Users\\guthe\\Pictures"));
-        fileChooserjFileChooser.setMultiSelectionEnabled(true);
+        fileChooserjFileChooser.setCurrentDirectory(new java.io.File("d:\\java"));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Slide Show");
         setLocationByPlatform(true);
 
         imageLabeljLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imageLabeljLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        imageLabeljLabel.setBorder(javax.swing.BorderFactory.createLineBorder(null));
         imageLabeljLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        imageLabeljLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                imageLabeljLabelMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                imageLabeljLabelMouseExited(evt);
-            }
-        });
         jScrollPane1.setViewportView(imageLabeljLabel);
 
         jMenu1.setText("File");
@@ -115,22 +104,12 @@ public class SlideShowView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if( fileChooserjFileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-            File[] files = fileChooserjFileChooser.getSelectedFiles();
-       
-            for (int i = 0; i < files.length; i++) {
-                File file = files[i];
-                String path = file.getAbsolutePath();
-                ImageIcon icon = new ImageIcon(path);
-                images.add(icon);
-            }
-            
-            ImageIcon imageicon =  images.get(0);
-            imageLabeljLabel.setIcon(imageicon);
-            
-//            File file = files[0];
-//            String path = file.getAbsolutePath();
-//            ImageIcon icon = new ImageIcon(path);
-//            imageLabeljLabel.setIcon(icon);
+            File file = fileChooserjFileChooser.getSelectedFile();
+            String path = file.getAbsolutePath();
+            System.out.printf("%s", path);
+        
+            ImageIcon icon = new ImageIcon(path);
+            imageLabeljLabel.setIcon(icon);
         }
     }//GEN-LAST:event_OpenjMenuItemActionPerformed
 
@@ -138,16 +117,6 @@ public class SlideShowView extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_ExitjMenuItemActionPerformed
-
-    private void imageLabeljLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabeljLabelMouseEntered
-        // TODO add your handling code here:
-        imageLabeljLabel.setEnabled(true);
-    }//GEN-LAST:event_imageLabeljLabelMouseEntered
-
-    private void imageLabeljLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabeljLabelMouseExited
-        // TODO add your handling code here:
-        imageLabeljLabel.setEnabled(false);
-    }//GEN-LAST:event_imageLabeljLabelMouseExited
 
     /**
      * @param args the command line arguments
