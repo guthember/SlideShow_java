@@ -5,16 +5,23 @@
  */
 package com.mycompany.slideshow;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.Timer;
 
 /**
  *
  * @author tanar
  */
 public class SlideShowView extends javax.swing.JFrame {
-
+    
+    private ArrayList<ImageIcon> images;
+    private Timer timeSet;
+    private int actItem;
     /**
      * Creates new form SlideShowView
      */
@@ -22,9 +29,12 @@ public class SlideShowView extends javax.swing.JFrame {
         initComponents();
         
         // own file filter
+        actItem = 0;
         ImageFileFilter filter = new ImageFileFilter();
         fileChooserjFileChooser.setFileFilter(filter);
-        
+        images = new ArrayList<>();
+        TimerController controller = new TimerController();
+        timeSet = new Timer(3000,controller);
     }
 
     /**
@@ -39,22 +49,44 @@ public class SlideShowView extends javax.swing.JFrame {
         fileChooserjFileChooser = new javax.swing.JFileChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         imageLabeljLabel = new javax.swing.JLabel();
+        setTimerjSlider = new javax.swing.JSlider();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         OpenjMenuItem = new javax.swing.JMenuItem();
         ExitjMenuItem = new javax.swing.JMenuItem();
 
         fileChooserjFileChooser.setAcceptAllFileFilterUsed(false);
-        fileChooserjFileChooser.setCurrentDirectory(new java.io.File("d:\\java"));
+        fileChooserjFileChooser.setCurrentDirectory(new java.io.File("C:\\Users\\guthe\\Pictures"));
+        fileChooserjFileChooser.setMultiSelectionEnabled(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Slide Show");
         setLocationByPlatform(true);
 
         imageLabeljLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imageLabeljLabel.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        imageLabeljLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         imageLabeljLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        imageLabeljLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                imageLabeljLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                imageLabeljLabelMouseExited(evt);
+            }
+        });
         jScrollPane1.setViewportView(imageLabeljLabel);
+
+        setTimerjSlider.setMaximum(10);
+        setTimerjSlider.setMinimum(1);
+        setTimerjSlider.setPaintLabels(true);
+        setTimerjSlider.setSnapToTicks(true);
+        setTimerjSlider.setToolTipText("Show images timer");
+        setTimerjSlider.setValue(3);
+        setTimerjSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                setTimerjSliderStateChanged(evt);
+            }
+        });
 
         jMenu1.setText("File");
 
@@ -86,14 +118,20 @@ public class SlideShowView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(setTimerjSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 176, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                .addComponent(setTimerjSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 268, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -104,12 +142,21 @@ public class SlideShowView extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         if( fileChooserjFileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION){
-            File file = fileChooserjFileChooser.getSelectedFile();
-            String path = file.getAbsolutePath();
-            System.out.printf("%s", path);
-        
-            ImageIcon icon = new ImageIcon(path);
-            imageLabeljLabel.setIcon(icon);
+            File[] files = fileChooserjFileChooser.getSelectedFiles();
+       
+            for (int i = 0; i < files.length; i++) {
+                File file = files[i];
+                String path = file.getAbsolutePath();
+                ImageIcon icon = new ImageIcon(path);
+                images.add(icon);
+            }
+            
+            timeSet.start();
+            
+//            File file = files[0];
+//            String path = file.getAbsolutePath();
+//            ImageIcon icon = new ImageIcon(path);
+//            imageLabeljLabel.setIcon(icon);
         }
     }//GEN-LAST:event_OpenjMenuItemActionPerformed
 
@@ -117,6 +164,22 @@ public class SlideShowView extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_ExitjMenuItemActionPerformed
+
+    private void imageLabeljLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabeljLabelMouseEntered
+        // TODO add your handling code here:
+        imageLabeljLabel.setEnabled(true);
+    }//GEN-LAST:event_imageLabeljLabelMouseEntered
+
+    private void imageLabeljLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabeljLabelMouseExited
+        // TODO add your handling code here:
+        imageLabeljLabel.setEnabled(false);
+    }//GEN-LAST:event_imageLabeljLabelMouseExited
+
+    private void setTimerjSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_setTimerjSliderStateChanged
+        // TODO add your handling code here:
+        int slideValue = setTimerjSlider.getValue();
+        timeSet.setDelay(slideValue * 1000);
+    }//GEN-LAST:event_setTimerjSliderStateChanged
 
     /**
      * @param args the command line arguments
@@ -152,6 +215,20 @@ public class SlideShowView extends javax.swing.JFrame {
             }
         });
     }
+    
+    class TimerController implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            int listSize = images.size();
+            if (listSize == actItem) {
+                actItem = 0;
+            }
+            ImageIcon picture = images.get(actItem++);
+            imageLabeljLabel.setIcon(picture);
+            
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem ExitjMenuItem;
@@ -161,5 +238,6 @@ public class SlideShowView extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSlider setTimerjSlider;
     // End of variables declaration//GEN-END:variables
 }
